@@ -12,4 +12,5 @@ repositories {
 
 dependencies {
     implementation("org.springframework:spring-webmvc:5.3.5")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.2")
 }
