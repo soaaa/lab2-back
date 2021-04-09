@@ -11,4 +11,5 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework:spring-webmvc:5.3.5")
 }
