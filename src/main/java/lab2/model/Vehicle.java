@@ -1,6 +1,9 @@
 package lab2.model;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lab2.DateSerializer;
+
 import java.time.LocalDateTime;
 
 public class Vehicle {
@@ -11,6 +14,7 @@ public class Vehicle {
 
     private Coordinates coordinates; //Поле не может быть null
 
+    @JsonSerialize(using = DateSerializer.class)
     private java.time.LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
 
     private float enginePower; //Значение поля должно быть больше 0
