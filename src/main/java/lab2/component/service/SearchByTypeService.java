@@ -4,8 +4,10 @@ import lab2.model.Vehicle;
 import lab2.model.VehicleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,15 +15,18 @@ import java.util.List;
 public class SearchByTypeService {
 
     private final VehicleUriFactory vehicleUriFactory;
+    private final RestTemplateFactory restTemplateFactory;
 
     @Autowired
-    public SearchByTypeService(VehicleUriFactory vehicleUriFactory) {
+    public SearchByTypeService(VehicleUriFactory vehicleUriFactory,
+                               RestTemplateFactory restTemplateFactory) {
         this.vehicleUriFactory = vehicleUriFactory;
+        this.restTemplateFactory = restTemplateFactory;
     }
 
-    public List<Vehicle> search(VehicleType type) {
+    public List<Vehicle> search(VehicleType type) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         String uri = vehicleUriFactory.createWithParams("type=" + type);
-        Vehicle[] vehicles = new RestTemplate().getForObject(uri, Vehicle[].class);
+        Vehicle[] vehicles = restTemplateFactory.create().getForObject(uri, Vehicle[].class);
         return Arrays.asList(vehicles);
     }
 }

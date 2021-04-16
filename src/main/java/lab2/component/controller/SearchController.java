@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
@@ -28,7 +31,7 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/by-type/{type}", method = RequestMethod.GET)
-    public ResponseEntity<List<Vehicle>> byType(@PathVariable("type") String typeValue) {
+    public ResponseEntity<List<Vehicle>> byType(@PathVariable("type") String typeValue) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         String uppercaseTypeValue = typeValue.toUpperCase();
         for (VehicleType type : VehicleType.values()) {
             if (type.name().equals(uppercaseTypeValue)) {
@@ -41,7 +44,7 @@ public class SearchController {
 
     @RequestMapping(value = "/by-engine-power/{from}/{to}", method = RequestMethod.GET)
     public List<Vehicle> byEnginePower(@PathVariable("from") float from,
-                                       @PathVariable("to") float to) {
+                                       @PathVariable("to") float to) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         return searchByEnginePowerService.search(from, to);
     }
 }
